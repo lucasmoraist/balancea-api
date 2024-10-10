@@ -4,29 +4,30 @@ import com.lucasmoraist.balancea.domain.dto.DataCreateIncome;
 import com.lucasmoraist.balancea.domain.dto.DataDetailsIncome;
 import com.lucasmoraist.balancea.domain.dto.DataListingIncome;
 import com.lucasmoraist.balancea.domain.entity.Income;
+import com.lucasmoraist.balancea.exceptions.DuplicateBadgetException;
+import com.lucasmoraist.balancea.exceptions.InvalidDateException;
+import com.lucasmoraist.balancea.exceptions.ResourceNotFoundException;
 import com.lucasmoraist.balancea.repository.IncomeRepository;
 import com.lucasmoraist.balancea.service.IncomeService;
+import com.lucasmoraist.balancea.validations.ValidateMonthAndYear;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class IncomeServiceImpl implements IncomeService {
 
-    @Autowired
-    private IncomeRepository repository;
+    private final IncomeRepository repository;
+    private final ValidateMonthAndYear validateMonthAndYear;
 
     @Override
     public DataDetailsIncome save(DataCreateIncome data) {
-        var exists = this.repository.existsByDescriptionAndMonth(data.description(), data.date().getMonthValue());
-
-        if (exists) {
-            throw new RuntimeException("Income already exists for this month");
-        }
+        this.validate(data);
 
         var income = new Income(data);
 
@@ -38,10 +39,7 @@ public class IncomeServiceImpl implements IncomeService {
     @Override
     public Page<DataListingIncome> listAll(Pageable pageable) {
         return this.repository.findAll(pageable)
-                .map(d -> {
-                    System.out.println(d);
-                    return new DataListingIncome(d.getId(), d.getBudget().getDescription(), d.getBudget().getAmount(), d.getBudget().getDate());
-                });
+                .map(DataListingIncome::new);
     }
 
     @Override
@@ -56,13 +54,7 @@ public class IncomeServiceImpl implements IncomeService {
     public List<DataDetailsIncome> listByMonthAndYear(int month, int year) {
         var incomes = this.repository.findAll();
 
-        if (month > 12 || month < 1) {
-            throw new RuntimeException("Invalid month");
-        }
-
-        if (year < 1000 || year > 9999) {
-            throw new RuntimeException("Invalid year");
-        }
+        this.validateMonthAndYear.validate(month, year);
 
         return incomes.stream()
                 .filter(i -> i.getBudget().getDate().getMonthValue() == month && i.getBudget().getDate().getYear() == year)
@@ -96,7 +88,14 @@ public class IncomeServiceImpl implements IncomeService {
 
     private Income getIncome(Long id) {
         return this.repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Income not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Income not found"));
     }
 
+    private void validate(DataCreateIncome data) {
+        var exists = this.repository.existsByDescriptionAndMonth(data.description(), data.date().getMonthValue());
+
+        if (exists) {
+            throw new DuplicateBadgetException("Income already exists for this month");
+        }
+    }
 }

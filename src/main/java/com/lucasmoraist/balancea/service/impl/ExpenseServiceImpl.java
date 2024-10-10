@@ -2,36 +2,31 @@ package com.lucasmoraist.balancea.service.impl;
 
 import com.lucasmoraist.balancea.domain.dto.*;
 import com.lucasmoraist.balancea.domain.entity.Budget;
-import com.lucasmoraist.balancea.domain.entity.Category;
 import com.lucasmoraist.balancea.domain.entity.Expense;
-import com.lucasmoraist.balancea.repository.CategoryRepository;
+import com.lucasmoraist.balancea.exceptions.DuplicateBadgetException;
+import com.lucasmoraist.balancea.exceptions.ResourceNotFoundException;
 import com.lucasmoraist.balancea.repository.ExpenseRepository;
 import com.lucasmoraist.balancea.service.CategoryService;
 import com.lucasmoraist.balancea.service.ExpenseService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.lucasmoraist.balancea.validations.ValidateMonthAndYear;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ExpenseServiceImpl implements ExpenseService {
 
-    @Autowired
-    private ExpenseRepository repository;
-    @Autowired
-    private CategoryService categoryService;
+    private final ExpenseRepository repository;
+    private final CategoryService categoryService;
+    private final ValidateMonthAndYear validateMonthAndYear;
 
     @Override
     public DataDetailsExpense save(DataCreateExpense data) {
-        var exists = this.repository.existsByDescriptionAndMonth(data.description(), data.date().getMonthValue());
-
-        if (exists) {
-            throw new RuntimeException("Expense already exists for this month");
-        }
-
+        this.validateDuplicateBadge(data);
 
         var budget = new Budget(data);
         var category = this.categoryService.save(data);
@@ -63,15 +58,7 @@ public class ExpenseServiceImpl implements ExpenseService {
     @Override
     public List<DataDetailsExpense> listByMonthAndYear(int month, int year) {
         var expenses = this.repository.findAll();
-
-        if (month > 12 || month < 1) {
-            throw new RuntimeException("Invalid month");
-        }
-
-        if (year < 1000 || year > 9999) {
-            throw new RuntimeException("Invalid year");
-        }
-
+        this.validateMonthAndYear.validate(month, year);
         return expenses.stream()
                 .filter(i -> i.getBudget().getDate().getMonthValue() == month && i.getBudget().getDate().getYear() == year)
                 .map(DataDetailsExpense::new)
@@ -101,6 +88,15 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     private Expense getExpense(Long id) {
         return this.repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Expense not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Expense not found"));
     }
+
+    private void validateDuplicateBadge(DataCreateExpense data) {
+        var exists = this.repository.existsByDescriptionAndMonth(data.description(), data.date().getMonthValue());
+
+        if (exists) {
+            throw new DuplicateBadgetException("Expense already exists for this month");
+        }
+    }
+
 }

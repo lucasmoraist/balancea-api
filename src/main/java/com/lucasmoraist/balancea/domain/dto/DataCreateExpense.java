@@ -10,12 +10,11 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public record DataCreateExpense(
-        @NotBlank
+        @NotBlank(message = "Description is required")
         String description,
-        @NotNull @Positive
+        @NotNull(message = "Amount is required") @Positive(message = "Amount must be positive")
         BigDecimal amount,
-
-        @NotNull @JsonFormat(pattern = "dd/MM/yyyy")
+        @NotNull(message = "Date is required") @JsonFormat(pattern = "dd/MM/yyyy")
         LocalDate date,
 
         Categories category

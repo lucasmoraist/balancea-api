@@ -20,7 +20,7 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long> {
     List<Expense> listExpenseByTerm(@PathVariable String term);
 
     @Query("""
-            SELECT CASE WHEN COUNT(i) > 0
+            SELECT CASE WHEN COUNT(e) > 0
             THEN TRUE ELSE FALSE END
             FROM Expense e
             WHERE e.budget.description = :description
