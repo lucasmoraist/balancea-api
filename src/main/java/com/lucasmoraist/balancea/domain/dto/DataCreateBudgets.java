@@ -8,7 +8,7 @@ import jakarta.validation.constraints.Positive;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public record DataCreateIncome(
+public record DataCreateBudgets (
 
         @NotBlank
         String description,

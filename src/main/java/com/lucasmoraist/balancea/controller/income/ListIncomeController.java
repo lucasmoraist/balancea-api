@@ -1,6 +1,6 @@
 package com.lucasmoraist.balancea.controller.income;
 
-import com.lucasmoraist.balancea.domain.dto.DataListingIncome;
+import com.lucasmoraist.balancea.domain.dto.DataListing;
 import com.lucasmoraist.balancea.service.IncomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,7 +20,7 @@ public class ListIncomeController {
     private IncomeService service;
 
     @GetMapping
-    public ResponseEntity<Page<DataListingIncome>> listIncomes(
+    public ResponseEntity<Page<DataListing>> listIncomes(
             @PageableDefault(size = 10, sort = {"budget.date"}, direction = Sort.Direction.ASC)
             Pageable pageable) {
         var incomes = this.service.listAll(pageable);

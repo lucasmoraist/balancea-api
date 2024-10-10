@@ -1,6 +1,6 @@
 package com.lucasmoraist.balancea.domain.entity;
 
-import com.lucasmoraist.balancea.domain.dto.DataCreateIncome;
+import com.lucasmoraist.balancea.domain.dto.DataCreateBudgets;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,11 +21,11 @@ public class Income {
     @Embedded
     private Budget budget;
 
-    public Income(DataCreateIncome data) {
+    public Income(DataCreateBudgets data) {
         this.budget = new Budget(data);
     }
 
-    public void updateData(DataCreateIncome data) {
+    public void updateData(DataCreateBudgets data) {
         this.budget.updateData(data);
     }
 }

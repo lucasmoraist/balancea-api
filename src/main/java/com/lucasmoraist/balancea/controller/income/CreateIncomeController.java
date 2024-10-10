@@ -1,7 +1,7 @@
 package com.lucasmoraist.balancea.controller.income;
 
-import com.lucasmoraist.balancea.domain.dto.DataCreateIncome;
-import com.lucasmoraist.balancea.domain.dto.DataDetailsIncome;
+import com.lucasmoraist.balancea.domain.dto.DataCreateBudgets;
+import com.lucasmoraist.balancea.domain.dto.DataDetailsBudget;
 import com.lucasmoraist.balancea.service.IncomeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ public class CreateIncomeController {
     private IncomeService service;
 
     @PostMapping
-    public ResponseEntity<DataDetailsIncome> create(@RequestBody @Valid DataCreateIncome data) {
+    public ResponseEntity<DataDetailsBudget> create(@RequestBody @Valid DataCreateBudgets data) {
         var income = this.service.save(data);
         return ResponseEntity.ok().body(income);
     }
