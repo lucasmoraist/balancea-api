@@ -51,6 +51,14 @@ public class IncomeServiceImpl implements IncomeService {
     }
 
     @Override
+    public List<DataListingIncome> listByDescription(String term) {
+        return this.repository.listIncomeByTerm(term)
+                .stream()
+                .map(DataListingIncome::new)
+                .toList();
+    }
+
+    @Override
     public DataDetailsIncome findById(Long id) {
         var income = this.getIncome(id);
         return new DataDetailsIncome(income);

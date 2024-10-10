@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class ExpenseServiceImpl implements ExpenseService {
@@ -54,6 +55,14 @@ public class ExpenseServiceImpl implements ExpenseService {
     public Page<DataListingExpense> listAll(Pageable pageable) {
         return this.repository.findAll(pageable)
                 .map(DataListingExpense::new);
+    }
+
+    @Override
+    public List<DataListingExpense> listByDescription(String term) {
+        return this.repository.listExpenseByTerm(term)
+                .stream()
+                .map(DataListingExpense::new)
+                .toList();
     }
 
     @Override

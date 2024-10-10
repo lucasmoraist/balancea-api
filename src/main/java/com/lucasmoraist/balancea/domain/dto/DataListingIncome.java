@@ -1,5 +1,6 @@
 package com.lucasmoraist.balancea.domain.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.lucasmoraist.balancea.domain.entity.Expense;
 import com.lucasmoraist.balancea.domain.entity.Income;
 
@@ -10,6 +11,7 @@ public record DataListingIncome(
         Long id,
         String description,
         BigDecimal amount,
+        @JsonFormat(pattern = "dd/MM/yyyy")
         LocalDate date
 ) {
     public DataListingIncome(Income income) {
