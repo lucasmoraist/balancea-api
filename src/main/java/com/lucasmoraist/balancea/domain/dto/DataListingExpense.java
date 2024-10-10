@@ -9,9 +9,16 @@ public record DataListingExpense(
         Long id,
         String description,
         BigDecimal amount,
-        LocalDate date
+        LocalDate date,
+        String category
 ) {
     public DataListingExpense(Expense expense) {
-        this(expense.getId(), expense.getBudget().getDescription(), expense.getBudget().getAmount(), expense.getBudget().getDate());
+        this(
+                expense.getId(),
+                expense.getBudget().getDescription(),
+                expense.getBudget().getAmount(),
+                expense.getBudget().getDate(),
+                expense.getCategory().getName().toString()
+        );
     }
 }

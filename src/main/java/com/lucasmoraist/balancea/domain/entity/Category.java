@@ -1,11 +1,14 @@
 package com.lucasmoraist.balancea.domain.entity;
 
+import com.lucasmoraist.balancea.domain.dto.DataCreateExpense;
 import com.lucasmoraist.balancea.domain.enums.Categories;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -20,4 +23,7 @@ public class Category {
     @Enumerated(EnumType.STRING)
     private Categories name;
 
+    public Category(DataCreateExpense data) {
+        this.name = data.category() == null ? Categories.OUTROS : data.category();
+    }
 }

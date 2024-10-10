@@ -10,9 +10,15 @@ public record DataDetailsExpense(
         String description,
         BigDecimal amount,
         @JsonFormat(pattern = "dd/MM/yyyy")
-        LocalDate date
+        LocalDate date,
+        String category
 ) {
         public DataDetailsExpense(Expense expense) {
-                this(expense.getBudget().getDescription(), expense.getBudget().getAmount(), expense.getBudget().getDate());
+                this(
+                        expense.getBudget().getDescription(),
+                        expense.getBudget().getAmount(),
+                        expense.getBudget().getDate(),
+                        expense.getCategory().getName().toString()
+                );
         }
 }

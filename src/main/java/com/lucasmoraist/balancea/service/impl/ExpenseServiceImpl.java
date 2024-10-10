@@ -1,8 +1,12 @@
 package com.lucasmoraist.balancea.service.impl;
 
 import com.lucasmoraist.balancea.domain.dto.*;
+import com.lucasmoraist.balancea.domain.entity.Budget;
+import com.lucasmoraist.balancea.domain.entity.Category;
 import com.lucasmoraist.balancea.domain.entity.Expense;
+import com.lucasmoraist.balancea.repository.CategoryRepository;
 import com.lucasmoraist.balancea.repository.ExpenseRepository;
+import com.lucasmoraist.balancea.service.CategoryService;
 import com.lucasmoraist.balancea.service.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,6 +20,8 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Autowired
     private ExpenseRepository repository;
+    @Autowired
+    private CategoryService categoryService;
 
     @Override
     public DataDetailsExpense save(DataCreateExpense data) {
@@ -31,7 +37,13 @@ public class ExpenseServiceImpl implements ExpenseService {
             break;
         }
 
-        var expense = new Expense(data);
+        var budget = new Budget(data);
+        var category = this.categoryService.save(data);
+
+        var expense = Expense.builder()
+                .budget(budget)
+                .category(category)
+                .build();
 
         this.repository.save(expense);
 
