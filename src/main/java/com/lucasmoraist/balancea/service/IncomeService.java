@@ -1,15 +1,15 @@
 package com.lucasmoraist.balancea.service;
 
-import com.lucasmoraist.balancea.domain.dto.DataCreateBudgets;
-import com.lucasmoraist.balancea.domain.dto.DataDetailsBudget;
-import com.lucasmoraist.balancea.domain.dto.DataListing;
+import com.lucasmoraist.balancea.domain.dto.DataCreateIncome;
+import com.lucasmoraist.balancea.domain.dto.DataDetailsIncome;
+import com.lucasmoraist.balancea.domain.dto.DataListingIncome;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface IncomeService {
-    DataDetailsBudget save(DataCreateBudgets data);
-    Page<DataListing> listAll(Pageable pageable);
-    DataDetailsBudget findById(Long id);
-    DataDetailsBudget update(Long id, DataCreateBudgets data);
+    DataDetailsIncome save(DataCreateIncome data);
+    Page<DataListingIncome> listAll(Pageable pageable);
+    DataDetailsIncome findById(Long id);
+    DataDetailsIncome update(Long id, DataCreateIncome data);
     void delete(Long id);
 }

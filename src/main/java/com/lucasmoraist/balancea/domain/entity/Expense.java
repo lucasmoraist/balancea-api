@@ -1,6 +1,7 @@
 package com.lucasmoraist.balancea.domain.entity;
 
-import com.lucasmoraist.balancea.domain.dto.DataCreateBudgets;
+import com.lucasmoraist.balancea.domain.enums.Categories;
+import com.lucasmoraist.balancea.domain.dto.DataCreateExpense;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,11 +23,20 @@ public class Expense {
     @Embedded
     private Budget budget;
 
-    public Expense(DataCreateBudgets data) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    public Expense(DataCreateExpense data) {
         this.budget = new Budget(data);
+        if(data.category() == null){
+            this.category = new Category(null, Categories.OUTROS);
+        } else {
+          this.category = new Category(null, data.category());
+        }
     }
 
-    public void updateData(DataCreateBudgets data) {
+    public void updateData(DataCreateExpense data) {
         this.budget.updateData(data);
     }
 }

@@ -1,7 +1,7 @@
 package com.lucasmoraist.balancea.controller.income;
 
-import com.lucasmoraist.balancea.domain.dto.DataCreateBudgets;
-import com.lucasmoraist.balancea.domain.dto.DataDetailsBudget;
+import com.lucasmoraist.balancea.domain.dto.DataCreateIncome;
+import com.lucasmoraist.balancea.domain.dto.DataDetailsIncome;
 import com.lucasmoraist.balancea.service.IncomeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ public class UpdateIncomeController {
     private IncomeService service;
 
     @PutMapping("update/{id}")
-    public ResponseEntity<DataDetailsBudget> update(@PathVariable Long id, @RequestBody @Valid DataCreateBudgets data) {
+    public ResponseEntity<DataDetailsIncome> update(@PathVariable Long id, @RequestBody @Valid DataCreateIncome data) {
         var income = this.service.update(id, data);
         return ResponseEntity.ok().body(income);
     }

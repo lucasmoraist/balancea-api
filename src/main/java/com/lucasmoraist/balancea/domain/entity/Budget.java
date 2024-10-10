@@ -1,6 +1,7 @@
 package com.lucasmoraist.balancea.domain.entity;
 
-import com.lucasmoraist.balancea.domain.dto.DataCreateBudgets;
+import com.lucasmoraist.balancea.domain.dto.DataCreateExpense;
+import com.lucasmoraist.balancea.domain.dto.DataCreateIncome;
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,13 +20,31 @@ public class Budget {
     private BigDecimal amount;
     private LocalDate date;
 
-    public Budget(DataCreateBudgets data) {
+    public Budget(DataCreateIncome data) {
         this.description = data.description();
         this.amount = data.amount();
         this.date = data.date();
     }
 
-    public void updateData(DataCreateBudgets data) {
+    public Budget(DataCreateExpense data) {
+        this.description = data.description();
+        this.amount = data.amount();
+        this.date = data.date();
+    }
+
+    public void updateData(DataCreateIncome data) {
+        if (data.description() != null) {
+            this.description = data.description();
+        }
+        if (data.amount() != null) {
+            this.amount = data.amount();
+        }
+        if (data.date() != null) {
+            this.date = data.date();
+        }
+    }
+
+    public void updateData(DataCreateExpense data) {
         if (data.description() != null) {
             this.description = data.description();
         }

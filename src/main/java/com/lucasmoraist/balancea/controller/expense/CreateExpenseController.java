@@ -1,7 +1,9 @@
 package com.lucasmoraist.balancea.controller.expense;
 
-import com.lucasmoraist.balancea.domain.dto.DataCreateBudgets;
-import com.lucasmoraist.balancea.domain.dto.DataDetailsBudget;
+import com.lucasmoraist.balancea.domain.dto.DataCreateExpense;
+import com.lucasmoraist.balancea.domain.dto.DataCreateIncome;
+import com.lucasmoraist.balancea.domain.dto.DataDetailsExpense;
+import com.lucasmoraist.balancea.domain.dto.DataDetailsIncome;
 import com.lucasmoraist.balancea.service.ExpenseService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +21,7 @@ public class CreateExpenseController {
     private ExpenseService service;
 
     @PostMapping
-    public ResponseEntity<DataDetailsBudget> create(@RequestBody @Valid DataCreateBudgets data) {
+    public ResponseEntity<DataDetailsExpense> create(@RequestBody @Valid DataCreateExpense data) {
         var expense = this.service.save(data);
         return ResponseEntity.ok().body(expense);
     }

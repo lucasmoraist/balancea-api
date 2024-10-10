@@ -1,8 +1,6 @@
 package com.lucasmoraist.balancea.service.impl;
 
-import com.lucasmoraist.balancea.domain.dto.DataCreateBudgets;
-import com.lucasmoraist.balancea.domain.dto.DataDetailsBudget;
-import com.lucasmoraist.balancea.domain.dto.DataListing;
+import com.lucasmoraist.balancea.domain.dto.*;
 import com.lucasmoraist.balancea.domain.entity.Expense;
 import com.lucasmoraist.balancea.repository.ExpenseRepository;
 import com.lucasmoraist.balancea.service.ExpenseService;
@@ -20,7 +18,7 @@ public class ExpenseServiceImpl implements ExpenseService {
     private ExpenseRepository repository;
 
     @Override
-    public DataDetailsBudget save(DataCreateBudgets data) {
+    public DataDetailsExpense save(DataCreateExpense data) {
         var expenses = this.repository.findAll();
         var month = LocalDate.now().getMonth();
 
@@ -37,27 +35,27 @@ public class ExpenseServiceImpl implements ExpenseService {
 
         this.repository.save(expense);
 
-        return new DataDetailsBudget(expense);
+        return new DataDetailsExpense(expense);
     }
 
     @Override
-    public Page<DataListing> listAll(Pageable pageable) {
+    public Page<DataListingExpense> listAll(Pageable pageable) {
         return this.repository.findAll(pageable)
-                .map(DataListing::new);
+                .map(DataListingExpense::new);
     }
 
     @Override
-    public DataDetailsBudget findById(Long id) {
+    public DataDetailsExpense findById(Long id) {
         var expense = this.getExpense(id);
-        return new DataDetailsBudget(expense);
+        return new DataDetailsExpense(expense);
     }
 
     @Override
-    public DataDetailsBudget update(Long id, DataCreateBudgets data) {
+    public DataDetailsExpense update(Long id, DataCreateExpense data) {
         var expense = this.getExpense(id);
         expense.updateData(data);
         this.repository.save(expense);
-        return new DataDetailsBudget(expense);
+        return new DataDetailsExpense(expense);
     }
 
     @Override

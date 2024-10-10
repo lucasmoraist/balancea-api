@@ -1,6 +1,6 @@
 package com.lucasmoraist.balancea.controller.income;
 
-import com.lucasmoraist.balancea.domain.dto.DataDetailsBudget;
+import com.lucasmoraist.balancea.domain.dto.DataDetailsIncome;
 import com.lucasmoraist.balancea.service.IncomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,7 @@ public class GetIncomeController {
     private IncomeService service;
 
     @GetMapping("{id}")
-    public ResponseEntity<DataDetailsBudget> getIncome(@PathVariable Long id) {
+    public ResponseEntity<DataDetailsIncome> getIncome(@PathVariable Long id) {
         var income = this.service.findById(id);
         return ResponseEntity.ok().body(income);
     }

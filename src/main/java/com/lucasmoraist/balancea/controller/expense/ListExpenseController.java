@@ -1,6 +1,7 @@
 package com.lucasmoraist.balancea.controller.expense;
 
-import com.lucasmoraist.balancea.domain.dto.DataListing;
+import com.lucasmoraist.balancea.domain.dto.DataListingExpense;
+import com.lucasmoraist.balancea.domain.dto.DataListingIncome;
 import com.lucasmoraist.balancea.service.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,7 +21,7 @@ public class ListExpenseController {
     private ExpenseService service;
 
     @GetMapping
-    public ResponseEntity<Page<DataListing>> list(
+    public ResponseEntity<Page<DataListingExpense>> list(
             @PageableDefault(size = 10, sort = {"id"}, direction = Sort.Direction.ASC)
             Pageable pageable) {
         var expenses = this.service.listAll(pageable);

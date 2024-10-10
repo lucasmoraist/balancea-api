@@ -1,8 +1,8 @@
 package com.lucasmoraist.balancea.service.impl;
 
-import com.lucasmoraist.balancea.domain.dto.DataCreateBudgets;
-import com.lucasmoraist.balancea.domain.dto.DataDetailsBudget;
-import com.lucasmoraist.balancea.domain.dto.DataListing;
+import com.lucasmoraist.balancea.domain.dto.DataCreateIncome;
+import com.lucasmoraist.balancea.domain.dto.DataDetailsIncome;
+import com.lucasmoraist.balancea.domain.dto.DataListingIncome;
 import com.lucasmoraist.balancea.domain.entity.Income;
 import com.lucasmoraist.balancea.repository.IncomeRepository;
 import com.lucasmoraist.balancea.service.IncomeService;
@@ -21,7 +21,7 @@ public class IncomeServiceImpl implements IncomeService {
     private IncomeRepository repository;
 
     @Override
-    public DataDetailsBudget save(DataCreateBudgets data) {
+    public DataDetailsIncome save(DataCreateIncome data) {
         List<Income> incomes = this.repository.findAll();
         var month = LocalDate.now().getMonth();
 
@@ -38,33 +38,33 @@ public class IncomeServiceImpl implements IncomeService {
 
         this.repository.save(income);
 
-        return new DataDetailsBudget(income);
+        return new DataDetailsIncome(income);
     }
 
     @Override
-    public Page<DataListing> listAll(Pageable pageable) {
+    public Page<DataListingIncome> listAll(Pageable pageable) {
         return this.repository.findAll(pageable)
                 .map(d -> {
                     System.out.println(d);
-                    return new DataListing(d.getId(), d.getBudget().getDescription(), d.getBudget().getAmount(), d.getBudget().getDate());
+                    return new DataListingIncome(d.getId(), d.getBudget().getDescription(), d.getBudget().getAmount(), d.getBudget().getDate());
                 });
     }
 
     @Override
-    public DataDetailsBudget findById(Long id) {
+    public DataDetailsIncome findById(Long id) {
         var income = this.getIncome(id);
-        return new DataDetailsBudget(income);
+        return new DataDetailsIncome(income);
     }
 
     @Override
-    public DataDetailsBudget update(Long id, DataCreateBudgets data) {
+    public DataDetailsIncome update(Long id, DataCreateIncome data) {
         var income = this.getIncome(id);
 
         income.updateData(data);
 
         this.repository.save(income);
 
-        return new DataDetailsBudget(income);
+        return new DataDetailsIncome(income);
     }
 
     @Override
