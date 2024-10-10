@@ -26,17 +26,12 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Override
     public DataDetailsExpense save(DataCreateExpense data) {
-        var expenses = this.repository.findAll();
-        var month = LocalDate.now().getMonth();
+        var exists = this.repository.existsByDescriptionAndMonth(data.description(), data.date().getMonthValue());
 
-        for (var expense : expenses) {
-            if (expense.getBudget().getDate().getMonth().equals(month)) {
-                if (expense.getBudget().getDescription().equals(data.description())) {
-                    throw new RuntimeException("There is already an expense for this budget in this month");
-                }
-            }
-            break;
+        if (exists) {
+            throw new RuntimeException("Expense already exists for this month");
         }
+
 
         var budget = new Budget(data);
         var category = this.categoryService.save(data);
@@ -63,6 +58,25 @@ public class ExpenseServiceImpl implements ExpenseService {
                 .stream()
                 .map(DataListingExpense::new)
                 .toList();
+    }
+
+    @Override
+    public List<DataDetailsExpense> listByMonthAndYear(int month, int year) {
+        var expenses = this.repository.findAll();
+
+        if (month > 12 || month < 1) {
+            throw new RuntimeException("Invalid month");
+        }
+
+        if (year < 1000 || year > 9999) {
+            throw new RuntimeException("Invalid year");
+        }
+
+        return expenses.stream()
+                .filter(i -> i.getBudget().getDate().getMonthValue() == month && i.getBudget().getDate().getYear() == year)
+                .map(DataDetailsExpense::new)
+                .toList()
+                ;
     }
 
     @Override

@@ -12,6 +12,15 @@ import java.util.List;
 public interface IncomeRepository extends JpaRepository<Income, Long> {
 
     @Query("""
+            SELECT CASE WHEN COUNT(i) > 0
+            THEN TRUE ELSE FALSE END
+            FROM Income i
+            WHERE i.budget.description = :description
+            AND MONTH(i.budget.date) = :month
+            """)
+    boolean existsByDescriptionAndMonth(String description, int month);
+
+    @Query("""
             SELECT i FROM Income i
             WHERE LOWER(i.budget.description)
             LIKE LOWER(CONCAT('%', :term, '%'))

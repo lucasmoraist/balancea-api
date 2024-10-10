@@ -22,16 +22,10 @@ public class IncomeServiceImpl implements IncomeService {
 
     @Override
     public DataDetailsIncome save(DataCreateIncome data) {
-        List<Income> incomes = this.repository.findAll();
-        var month = LocalDate.now().getMonth();
+        var exists = this.repository.existsByDescriptionAndMonth(data.description(), data.date().getMonthValue());
 
-        for(var income : incomes) {
-            if(income.getBudget().getDate().getMonth().equals(month)) {
-                if (income.getBudget().getDescription().equals(data.description())) {
-                    throw new RuntimeException("There is already an income for this budget in this month");
-                }
-            }
-            break;
+        if (exists) {
+            throw new RuntimeException("Income already exists for this month");
         }
 
         var income = new Income(data);
@@ -56,6 +50,25 @@ public class IncomeServiceImpl implements IncomeService {
                 .stream()
                 .map(DataListingIncome::new)
                 .toList();
+    }
+
+    @Override
+    public List<DataDetailsIncome> listByMonthAndYear(int month, int year) {
+        var incomes = this.repository.findAll();
+
+        if (month > 12 || month < 1) {
+            throw new RuntimeException("Invalid month");
+        }
+
+        if (year < 1000 || year > 9999) {
+            throw new RuntimeException("Invalid year");
+        }
+
+        return incomes.stream()
+                .filter(i -> i.getBudget().getDate().getMonthValue() == month && i.getBudget().getDate().getYear() == year)
+                .map(DataDetailsIncome::new)
+                .toList()
+                ;
     }
 
     @Override
