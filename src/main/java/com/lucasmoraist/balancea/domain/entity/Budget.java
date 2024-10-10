@@ -24,4 +24,16 @@ public class Budget {
         this.amount = data.amount();
         this.date = data.date();
     }
+
+    public void updateData(DataCreateIncome data) {
+        if (data.description() != null) {
+            this.description = data.description();
+        }
+        if (data.amount() != null) {
+            this.amount = data.amount();
+        }
+        if (data.date() != null) {
+            this.date = data.date();
+        }
+    }
 }

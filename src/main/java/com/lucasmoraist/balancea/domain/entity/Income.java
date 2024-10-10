@@ -24,4 +24,8 @@ public class Income {
     public Income(DataCreateIncome data) {
         this.budget = new Budget(data);
     }
+
+    public void updateData(DataCreateIncome data) {
+        this.budget.updateData(data);
+    }
 }

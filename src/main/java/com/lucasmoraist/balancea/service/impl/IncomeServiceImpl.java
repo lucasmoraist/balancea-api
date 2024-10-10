@@ -43,21 +43,39 @@ public class IncomeServiceImpl implements IncomeService {
 
     @Override
     public Page<DataListingIncome> listAll(Pageable pageable) {
-        return null;
+        return this.repository.findAll(pageable)
+                .map(d -> {
+                    System.out.println(d);
+                    return new DataListingIncome(d.getId(), d.getBudget().getDescription(), d.getBudget().getAmount(), d.getBudget().getDate());
+                });
     }
 
     @Override
     public DataDetailsIncome findById(Long id) {
-        return null;
+        var income = this.getIncome(id);
+        return new DataDetailsIncome(income);
     }
 
     @Override
     public DataDetailsIncome update(Long id, DataCreateIncome data) {
-        return null;
+        var income = this.getIncome(id);
+
+        income.updateData(data);
+
+        this.repository.save(income);
+
+        return new DataDetailsIncome(income);
     }
 
     @Override
     public void delete(Long id) {
-
+        var income = this.getIncome(id);
+        this.repository.delete(income);
     }
+
+    private Income getIncome(Long id) {
+        return this.repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Income not found"));
+    }
+
 }
