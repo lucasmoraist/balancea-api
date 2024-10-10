@@ -1,8 +1,8 @@
 package com.lucasmoraist.balancea.controller.expense;
 
 import com.lucasmoraist.balancea.domain.dto.DataListingExpense;
-import com.lucasmoraist.balancea.domain.dto.DataListingIncome;
 import com.lucasmoraist.balancea.service.ExpenseService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/v2/expense")
+@Tag(name = "Expense")
 public class ListExpenseController {
 
     @Autowired

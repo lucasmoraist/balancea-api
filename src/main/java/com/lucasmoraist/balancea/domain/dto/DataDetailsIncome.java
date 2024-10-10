@@ -1,7 +1,6 @@
 package com.lucasmoraist.balancea.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.lucasmoraist.balancea.domain.entity.Expense;
 import com.lucasmoraist.balancea.domain.entity.Income;
 
 import java.math.BigDecimal;

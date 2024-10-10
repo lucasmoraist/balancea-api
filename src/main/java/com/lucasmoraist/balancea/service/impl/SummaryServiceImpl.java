@@ -2,7 +2,6 @@ package com.lucasmoraist.balancea.service.impl;
 
 import com.lucasmoraist.balancea.domain.dto.DataCreateSummary;
 import com.lucasmoraist.balancea.domain.dto.DataExpenseByCategory;
-import com.lucasmoraist.balancea.domain.entity.Income;
 import com.lucasmoraist.balancea.repository.ExpenseRepository;
 import com.lucasmoraist.balancea.repository.IncomeRepository;
 import com.lucasmoraist.balancea.service.SummaryService;

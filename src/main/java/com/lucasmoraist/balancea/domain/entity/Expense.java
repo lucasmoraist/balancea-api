@@ -1,6 +1,5 @@
 package com.lucasmoraist.balancea.domain.entity;
 
-import com.lucasmoraist.balancea.domain.enums.Categories;
 import com.lucasmoraist.balancea.domain.dto.DataCreateExpense;
 import jakarta.persistence.*;
 import lombok.*;

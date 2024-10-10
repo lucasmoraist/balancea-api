@@ -3,7 +3,6 @@ package com.lucasmoraist.balancea.service;
 import com.lucasmoraist.balancea.domain.dto.DataCreateIncome;
 import com.lucasmoraist.balancea.domain.dto.DataDetailsIncome;
 import com.lucasmoraist.balancea.domain.dto.DataListingIncome;
-import com.lucasmoraist.balancea.domain.entity.Income;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
