@@ -1,0 +1,27 @@
+package com.lucasmoraist.balancea.domain.entity;
+
+import com.lucasmoraist.balancea.domain.dto.DataCreateIncome;
+import jakarta.persistence.Embeddable;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Embeddable
+public class Budget {
+
+    private String description;
+    private BigDecimal amount;
+    private LocalDate date;
+
+    public Budget(DataCreateIncome data) {
+        this.description = data.description();
+        this.amount = data.amount();
+        this.date = data.date();
+    }
+}
