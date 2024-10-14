@@ -4,6 +4,7 @@ import com.lucasmoraist.balancea.domain.dto.DataCreateExpense;
 import com.lucasmoraist.balancea.domain.dto.DataCreateIncome;
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Embeddable
 public class Budget {
 

@@ -2,14 +2,12 @@ package com.lucasmoraist.balancea.domain.entity;
 
 import com.lucasmoraist.balancea.domain.dto.DataCreateIncome;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity(name = "Income")
 @Table(name = "t_income")
 @EqualsAndHashCode(of = "id")
