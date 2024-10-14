@@ -17,6 +17,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class SummaryServiceImpl implements SummaryService {
 
+    // TODO: as interfaces de Income e Expense não podem ser usadas diretamente aqui
+    // Para resolver isso, utilize as services de Income e Expense
     private final IncomeRepository incomeRepository;
     private final ExpenseRepository expenseRepository;
     private final ValidateMonthAndYear validateMonthAndYear;
