@@ -1,9 +1,6 @@
 package com.lucasmoraist.balancea.infra.exception;
 
-import com.lucasmoraist.balancea.exceptions.DuplicateBadgetException;
-import com.lucasmoraist.balancea.exceptions.ExceptionDTO;
-import com.lucasmoraist.balancea.exceptions.InvalidDateException;
-import com.lucasmoraist.balancea.exceptions.ResourceNotFoundException;
+import com.lucasmoraist.balancea.exceptions.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -66,6 +63,18 @@ public class RestExceptionHandler {
     protected ResponseEntity<String> handleAccessDeniedException() {
         log.warn("Acesso negado.");
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acesso negado");
+    }
+
+    @ExceptionHandler(EmailDuplicateException.class)
+    protected ResponseEntity<ExceptionDTO> handleEmailDuplicateException(EmailDuplicateException e) {
+        log.warn("Email duplicado: {}", e.getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ExceptionDTO(e.getMessage(), HttpStatus.CONFLICT));
+    }
+
+    @ExceptionHandler(CredentialsException.class)
+    protected ResponseEntity<ExceptionDTO> handleCredentialsException(CredentialsException e) {
+        log.warn("Credenciais inválidas: {}", e.getMessage());
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ExceptionDTO(e.getMessage(), HttpStatus.UNAUTHORIZED));
     }
 
     @ExceptionHandler(Exception.class)
