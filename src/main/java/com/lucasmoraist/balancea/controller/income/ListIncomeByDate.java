@@ -3,6 +3,7 @@ package com.lucasmoraist.balancea.controller.income;
 import com.lucasmoraist.balancea.domain.dto.DataDetailsIncome;
 import com.lucasmoraist.balancea.service.IncomeService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/v2/income")
 @Tag(name = "Income")
+@Slf4j
 public class ListIncomeByDate {
 
     @Autowired
@@ -22,8 +24,13 @@ public class ListIncomeByDate {
 
     @GetMapping("{month}/{year}")
     public ResponseEntity<List<DataDetailsIncome>> listByDate(@PathVariable int month, @PathVariable int year) {
+        log.info("Buscando receitas para o mês: {} e ano: {}", month, year);
+
         var incomes = this.service.listByMonthAndYear(month, year);
+
+        log.info("Receitas encontradas: {}", incomes.size());
         return ResponseEntity.ok().body(incomes);
     }
+
 
 }

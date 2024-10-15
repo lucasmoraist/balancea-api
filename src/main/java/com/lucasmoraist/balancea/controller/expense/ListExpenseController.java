@@ -3,6 +3,7 @@ package com.lucasmoraist.balancea.controller.expense;
 import com.lucasmoraist.balancea.domain.dto.DataListingExpense;
 import com.lucasmoraist.balancea.service.ExpenseService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/v2/expense")
 @Tag(name = "Expense")
+@Slf4j
 public class ListExpenseController {
 
     @Autowired
@@ -25,8 +27,15 @@ public class ListExpenseController {
     public ResponseEntity<Page<DataListingExpense>> list(
             @PageableDefault(size = 10, sort = {"id"}, direction = Sort.Direction.ASC)
             Pageable pageable) {
+
+        log.info("Listando despesas com paginação: página={}, tamanho={}", pageable.getPageNumber(), pageable.getPageSize());
+
         var expenses = this.service.listAll(pageable);
+
+        log.info("Total de despesas encontradas: {}", expenses.getTotalElements());
+
         return ResponseEntity.ok().body(expenses);
     }
+
 
 }
