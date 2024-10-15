@@ -2,6 +2,10 @@ package com.lucasmoraist.balancea.controller.expense;
 
 import com.lucasmoraist.balancea.domain.dto.DataListingExpense;
 import com.lucasmoraist.balancea.service.ExpenseService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +20,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/v2/expense")
-@Tag(name = "Expense")
+@Tag(name = "Expense", description = "Operações relacionadas a despesas.")
 @Slf4j
 public class ListExpenseController {
 
     @Autowired
     private ExpenseService service;
 
+    @Operation(summary = "Lista despesas.", description = "Lista todas as despesas com paginação.")
+    @Parameter(name = "page", description = "Número da página.", example = "0")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Despesas encontradas.")
+    })
     @GetMapping
     public ResponseEntity<Page<DataListingExpense>> list(
             @PageableDefault(size = 10, sort = {"id"}, direction = Sort.Direction.ASC)

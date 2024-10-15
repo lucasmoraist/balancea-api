@@ -2,6 +2,10 @@ package com.lucasmoraist.balancea.controller.income;
 
 import com.lucasmoraist.balancea.domain.dto.DataListingIncome;
 import com.lucasmoraist.balancea.service.IncomeService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +20,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/v2/income")
-@Tag(name = "Income")
+@Tag(name = "Income", description = "Operações relacionadas a receitas.")
 @Slf4j
 public class ListIncomeController {
 
     @Autowired
     private IncomeService service;
 
+    @Operation(summary = "Lista receitas.", description = "Lista todas as receitas com paginação.")
+    @Parameter(name = "page", description = "Número da página.", example = "0")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Receitas encontradas.")
+    })
     @GetMapping
     public ResponseEntity<Page<DataListingIncome>> listIncomes(
             @PageableDefault(size = 10, sort = {"budget.date"}, direction = Sort.Direction.ASC)

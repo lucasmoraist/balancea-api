@@ -3,6 +3,10 @@ package com.lucasmoraist.balancea.controller.user;
 import com.lucasmoraist.balancea.domain.dto.DataCreateUser;
 import com.lucasmoraist.balancea.domain.dto.DataDetailsUser;
 import com.lucasmoraist.balancea.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +18,20 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/v1")
+@Tag(name = "User", description = "Operações relacionadas a usuários")
 @Slf4j
 public class CreateUserController {
 
     @Autowired
     private UserService userService;
 
+    @Operation(summary = "Cria um novo usuário", description = "Cria um novo usuário no sistema")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Usuário criado com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Dados inválidos para a criação do usuário"),
+            @ApiResponse(responseCode = "409", description = "Usuário já cadastrado")
+    })
     @PostMapping("/signup")
     public ResponseEntity<DataDetailsUser> signup(@RequestBody @Valid DataCreateUser data, UriComponentsBuilder uriBuilder) {
         log.info("Iniciando processo de cadastro para o usuário: {}", data.email());

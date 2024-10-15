@@ -5,6 +5,8 @@ import com.lucasmoraist.balancea.domain.dto.DataDetailsUser;
 import com.lucasmoraist.balancea.domain.dto.DataLoginUser;
 import com.lucasmoraist.balancea.domain.dto.TokenDTO;
 import com.lucasmoraist.balancea.domain.entity.User;
+import com.lucasmoraist.balancea.exceptions.CredentialsException;
+import com.lucasmoraist.balancea.exceptions.EmailDuplicateException;
 import com.lucasmoraist.balancea.infra.security.TokenService;
 import com.lucasmoraist.balancea.repository.UserRepository;
 import com.lucasmoraist.balancea.service.UserService;
@@ -29,7 +31,7 @@ public class UserServiceImpl implements UserService {
         var findEmail = this.repository.findByEmail(data.email());
         if (findEmail != null) {
             log.warn("Tentativa de registro falhou: email já cadastrado: {}", data.email());
-            throw new IllegalArgumentException("Email already registered");
+            throw new EmailDuplicateException("Email already registered");
         }
 
         var user = User.builder()
@@ -52,12 +54,12 @@ public class UserServiceImpl implements UserService {
 
         if (user == null) {
             log.warn("Login falhou: credenciais inválidas para email: {}", data.email());
-            throw new IllegalArgumentException("Invalid credentials");
+            throw new CredentialsException("Invalid credentials");
         }
 
         if (!passwordEncoder.matches(data.password(), user.getPassword())) {
             log.warn("Login falhou: senha inválida para email: {}", data.email());
-            throw new IllegalArgumentException("Invalid credentials");
+            throw new CredentialsException("Invalid credentials");
         }
 
         var token = tokenService.generateToken(user.getUsername());
