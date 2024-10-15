@@ -6,6 +6,7 @@ import com.lucasmoraist.balancea.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +21,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RestController
 @RequestMapping("/v1")
 @Tag(name = "User", description = "Operações relacionadas a usuários")
+@SecurityRequirement(name = "bearer-key")
 @Slf4j
 public class CreateUserController {
 
