@@ -21,7 +21,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RestController
 @RequestMapping("/v1")
 @Tag(name = "User", description = "Operações relacionadas a usuários")
-@SecurityRequirement(name = "bearer-key")
 @Slf4j
 public class LoginController {
 
