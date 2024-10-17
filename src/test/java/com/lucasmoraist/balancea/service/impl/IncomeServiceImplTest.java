@@ -2,12 +2,8 @@ package com.lucasmoraist.balancea.service.impl;
 
 import com.lucasmoraist.balancea.domain.dto.DataCreateIncome;
 import com.lucasmoraist.balancea.domain.dto.DataDetailsIncome;
-import com.lucasmoraist.balancea.domain.dto.DataListingIncome;
-import com.lucasmoraist.balancea.domain.entity.Budget;
 import com.lucasmoraist.balancea.domain.entity.Income;
-import com.lucasmoraist.balancea.exceptions.DuplicateBadgetException;
 import com.lucasmoraist.balancea.repository.IncomeRepository;
-import com.lucasmoraist.balancea.validations.ValidateMonthAndYear;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,18 +12,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)

@@ -1,7 +1,7 @@
 package com.lucasmoraist.balancea.service.impl;
 
 import com.lucasmoraist.balancea.domain.dto.*;
-import com.lucasmoraist.balancea.domain.entity.Budget;
+import com.lucasmoraist.balancea.domain.model.Budget;
 import com.lucasmoraist.balancea.domain.entity.Expense;
 import com.lucasmoraist.balancea.exceptions.DuplicateBadgetException;
 import com.lucasmoraist.balancea.exceptions.ResourceNotFoundException;

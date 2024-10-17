@@ -1,6 +1,6 @@
 package com.lucasmoraist.balancea.repository;
 
-import com.lucasmoraist.balancea.domain.entity.Budget;
+import com.lucasmoraist.balancea.domain.model.Budget;
 import com.lucasmoraist.balancea.domain.entity.Expense;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

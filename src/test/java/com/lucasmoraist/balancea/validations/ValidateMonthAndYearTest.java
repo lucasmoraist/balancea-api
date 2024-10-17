@@ -1,6 +1,7 @@
 package com.lucasmoraist.balancea.validations;
 
 import com.lucasmoraist.balancea.exceptions.InvalidDateException;
+import com.lucasmoraist.balancea.validations.impl.ValidateMonthAndYearImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,29 +15,29 @@ import static org.junit.jupiter.api.Assertions.*;
 class ValidateMonthAndYearTest {
 
     @Autowired
-    private ValidateMonthAndYear validateMonthAndYear;
+    private ValidateMonthAndYearImpl validateMonthAndYearImpl;
 
     @Test
     @DisplayName("Should throw exception when month is less than 1")
     void case01() {
-        assertThrows(InvalidDateException.class, () -> this.validateMonthAndYear.validate(0, 2021));
+        assertThrows(InvalidDateException.class, () -> this.validateMonthAndYearImpl.validate(0, 2021));
     }
 
     @Test
     @DisplayName("Should throw exception when month is greater than 12")
     void case02() {
-        assertThrows(InvalidDateException.class, () -> this.validateMonthAndYear.validate(13, 2021));
+        assertThrows(InvalidDateException.class, () -> this.validateMonthAndYearImpl.validate(13, 2021));
     }
 
     @Test
     @DisplayName("Should throw exception when year is less than 1000")
     void case03() {
-        assertThrows(InvalidDateException.class, () -> this.validateMonthAndYear.validate(1, 999));
+        assertThrows(InvalidDateException.class, () -> this.validateMonthAndYearImpl.validate(1, 999));
     }
 
     @Test
     @DisplayName("Should throw exception when year is greater than 9999")
     void case04() {
-        assertThrows(InvalidDateException.class, () -> this.validateMonthAndYear.validate(1, 10000));
+        assertThrows(InvalidDateException.class, () -> this.validateMonthAndYearImpl.validate(1, 10000));
     }
 }

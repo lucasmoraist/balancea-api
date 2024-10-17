@@ -1,6 +1,7 @@
 package com.lucasmoraist.balancea.domain.entity;
 
 import com.lucasmoraist.balancea.domain.dto.DataCreateExpense;
+import com.lucasmoraist.balancea.domain.model.Budget;
 import jakarta.persistence.*;
 import lombok.*;
 

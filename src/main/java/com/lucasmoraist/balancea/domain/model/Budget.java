@@ -1,4 +1,4 @@
-package com.lucasmoraist.balancea.domain.entity;
+package com.lucasmoraist.balancea.domain.model;
 
 import com.lucasmoraist.balancea.domain.dto.DataCreateExpense;
 import com.lucasmoraist.balancea.domain.dto.DataCreateIncome;
