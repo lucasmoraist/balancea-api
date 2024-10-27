@@ -101,9 +101,6 @@ docker-compose up -d
 - Com o projeto em execução, utilize uma ferramenta como Postman ou Insomnia para testar a API.
 - Acesse o Swagger para visualizar e testar os endpoints disponíveis.
 
-## Contribuições
-Contribuições são bem-vindas! Sinta-se à vontade para enviar pull requests com melhorias, correções de bugs ou novos recursos.
-
 ## Contatos
 <a href = "mailto:seu-email@gmail.com">
   <img src="https://img.shields.io/badge/-Gmail-%23333?style=for-the-badge&logo=gmail&logoColor=white" target="_blank" alt="">
